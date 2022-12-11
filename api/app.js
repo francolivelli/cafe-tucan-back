@@ -5,6 +5,8 @@ app.use(express.json());
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
+const models = require("./models");
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config({ path: "../.env" });
 }
@@ -19,4 +21,4 @@ db.sync({ force: false })
       console.log("Server is listening on port", PORT);
     });
   })
-  .catch(console.error);
+  .catch(error => console.log("There was an error:", error));
