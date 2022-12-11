@@ -1,13 +1,24 @@
 const express = require("express");
-const morgan = require("morgan")
-
 const app = express();
+app.use(express.json());
 
-app.use(express.json())
-app.use(morgan("tiny"))
+const morgan = require("morgan");
+app.use(morgan("tiny"));
 
-require("dotenv").config()
+const models = require("./models");
 
-app.listen(process.env.PORT, ()=>{
-    console.log("Server running on port", process.env.PORT)
-})
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: "../.env" });
+}
+
+const PORT = process.env.PORT || 3000;
+
+const db = require("./config/db");
+
+db.sync({ force: false })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log("Server is listening on port", PORT);
+    });
+  })
+  .catch(error => console.log("There was an error:", error));

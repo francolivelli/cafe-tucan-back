@@ -1,0 +1,5 @@
+const Category = require("./Category")
+const Ingredient = require("./Ingredient")
+const Product = require("./Product")
+const ProductVariant = require("./ProductVariant")
+const User = require("./User")
