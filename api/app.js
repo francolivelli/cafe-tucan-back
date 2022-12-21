@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
 const models = require("./models");
+
+const routes = require("./routes");
+app.use("/api", routes);
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config({ path: "../.env" });
@@ -21,4 +25,4 @@ db.sync({ force: false })
       console.log("Server is listening on port", PORT);
     });
   })
-  .catch(error => console.log("There was an error:", error));
+  .catch((error) => console.log("There was an error:", error));
