@@ -10,8 +10,8 @@ Category.hasMany(Product);
 ProductVariant.belongsTo(Product);
 Product.hasMany(ProductVariant);
 
-ProductVariant.hasOne(Ingredient);
-Ingredient.belongsToMany(ProductVariant);
+ProductVariant.hasMany(Ingredient);
+Ingredient.belongsTo(ProductVariant);
 
 module.exports = {
   Category,

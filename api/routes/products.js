@@ -9,3 +9,5 @@ const products_controller = require("../controllers/productsController.js");
 // UPDATE
 
 // DELETE
+
+module.exports = router;

@@ -1,4 +1,4 @@
-const products_service = require("../services/products_service.js");
+const products_service = require("../services/productsService.js");
 
 // CREATE
 

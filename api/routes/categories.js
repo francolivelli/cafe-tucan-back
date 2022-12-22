@@ -9,3 +9,5 @@ const categories_controller = require("../controllers/categoriesController.js");
 // UPDATE
 
 // DELETE
+
+module.exports = router;

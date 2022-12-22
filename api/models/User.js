@@ -20,19 +20,39 @@ User.init(
     name: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: "Field cannot be empty." },
+        isAlpha: {
+          args: true,
+          msg: "Name can only contain letters.",
+        },
+      },
     },
-    lastName: {
+    surname: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: "Field cannot be empty." },
+        isAlpha: {
+          args: true,
+          msg: "Surname can only contain letters.",
+        },
+      },
     },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
-      validate: { isEmail: true },
+      validate: {
+        isEmail: {
+          args: true,
+          msg: "Field must be filled with a valid email.",
+        },
+      },
       unique: true,
     },
-    pass: {
+    password: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     salt: {
       type: Sequelize.STRING,
@@ -73,9 +93,9 @@ User.init(
 // });
 
 User.afterCreate((user) => {
-    if (user.id == 1) {
-      User.update({ isAdmin: true }, { where: { id: 1 } });
-    }
-  });
+  if (user.id == 1) {
+    User.update({ isAdmin: true }, { where: { id: 1 } });
+  }
+});
 
 module.exports = User;

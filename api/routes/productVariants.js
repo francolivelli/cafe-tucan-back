@@ -9,3 +9,5 @@ const productVariants_controller = require("../controllers/productVariantsContro
 // UPDATE
 
 // DELETE
+
+module.exports = router;

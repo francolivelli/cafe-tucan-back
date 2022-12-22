@@ -9,3 +9,5 @@ const ingredients_controller = require("../controllers/ingredientsController.js"
 // UPDATE
 
 // DELETE
+
+module.exports = router;
