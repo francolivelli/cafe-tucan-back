@@ -6,13 +6,14 @@ class ProductVariant extends Sequelize.Model {}
 ProductVariant.init(
   {
     price: {
-        type: Sequelize.FLOAT,
-        allowNull: false
-    }
+      type: Sequelize.FLOAT,
+      allowNull: false,
+    },
   },
   {
     sequelize: db,
     modelName: "product_variant",
+    timestamps: false,
   }
 );
 

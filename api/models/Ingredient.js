@@ -6,13 +6,14 @@ class Ingredient extends Sequelize.Model {}
 Ingredient.init(
   {
     name: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
   },
   {
     sequelize: db,
     modelName: "ingredient",
+    timestamps: false,
   }
 );
 
