@@ -17,10 +17,10 @@ Product.init(
       type: Sequelize.FLOAT,
       allowNull: false,
     },
-    variants: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-    },
+    image: {
+      type: Sequelize.TEXT,
+      allowNull: true
+    }
   },
   {
     sequelize: db,
