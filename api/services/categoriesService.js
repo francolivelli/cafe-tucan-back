@@ -16,6 +16,14 @@ exports.getCategories = async () => {
   });
   return categories;
 };
+// Get specific category: /api/categories/:id
+exports.getCategory = async (id) => {
+  let category = await Category.findOne({
+    where: { id },
+    include: { model: Product, as: "products" },
+  });
+  return category;
+};
 
 // U
 // Edit category: /api/categories/edit/:id

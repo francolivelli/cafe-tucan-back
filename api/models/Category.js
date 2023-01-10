@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const db = require("../config/db");
+const db = require("../database/db");
 
 class Category extends Sequelize.Model {}
 
@@ -17,7 +17,6 @@ Category.init(
   {
     sequelize: db,
     modelName: "category",
-    timestamps: false,
   }
 );
 

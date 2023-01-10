@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const db = require("../config/db");
+const db = require("../database/db");
 
 class Product extends Sequelize.Model {}
 
@@ -25,7 +25,6 @@ Product.init(
   {
     sequelize: db,
     modelName: "product",
-    timestamps: false,
   }
 );
 

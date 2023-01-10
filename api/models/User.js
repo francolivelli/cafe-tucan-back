@@ -1,19 +1,16 @@
 const Sequelize = require("sequelize");
-const db = require("../config/db");
+const db = require("../database/db");
 const bcrypt = require("bcrypt");
 
-class User extends Sequelize.Model {}
-
-// {
-//   hash(password, salt) {
-//     return bcrypt.hash(password, salt);
-//   }
-//   validatePassword(password) {
-//     return this.hash(password, this.salt).then(
-//       (newHash) => newHash === this.pass
-//     );
-//   }
-// }
+class User extends Sequelize.Model {
+  hash(password, salt) {
+    return bcrypt.hash(password, salt);
+  }
+  async validatePassword(password) {
+    const hash = await this.hash(password, this.salt);
+    return hash === this.password;
+  }
+}
 
 User.init(
   {
@@ -26,6 +23,10 @@ User.init(
           args: true,
           msg: "Name can only contain letters.",
         },
+        len: {
+          args: [2,255],
+          msg: "Name must be at least two letters long."
+        }
       },
     },
     surname: {
@@ -59,38 +60,29 @@ User.init(
     },
     isAdmin: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    isLoggedIn: {
-      type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
   },
-  { sequelize: db, modelName: "user", timestamps: false }
+  {
+    sequelize: db,
+    modelName: "user",
+  }
 );
 
-// User.beforeCreate((user) => {
-//   const salt = bcrypt.genSaltSync();
+User.beforeCreate(async (user) => {
+  user.salt = bcrypt.genSaltSync(10);
+  const hash = await user.hash(user.password, user.salt);
+  user.password = hash;
+});
 
-//   user.salt = salt;
-
-//   return user.hash(user.pass, salt).then((hash) => {
-//     user.pass = hash;
-//   });
-// });
-
-// User.beforeUpdate((user) => {
-//   User.findOne({ where: { id: user.id } }).then((userOld) => {
-//     if (user.pass !== userOld.pass) {
-//       const salt = bcrypt.genSaltSync();
-//       user.salt = salt;
-//       return bcrypt.hash(user.pass, salt).then((hash) => {
-//         user.pass = hash;
-//       });
-//     }
-//   });
-// });
+User.beforeUpdate(async (user) => {
+  const oldUser = await User.findOne({ where: { id: user.id } });
+  if (user.password !== oldUser.password) {
+    user.salt = bcrypt.genSaltSync(10);
+    const hash = await bcrypt.hash(user.password, user.salt);
+    user.password = hash;
+  }
+});
 
 User.afterCreate((user) => {
   if (user.id == 1) {
