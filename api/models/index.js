@@ -1,5 +1,14 @@
-const Category = require("./Category")
-const Ingredient = require("./Ingredient")
-const Product = require("./Product")
-const ProductVariant = require("./ProductVariant")
-const User = require("./User")
+const Category = require("./Category");
+const Product = require("./Product");
+const Specialty = require("./Specialty")
+const User = require("./User");
+
+Category.hasMany(Product, { as: "products", foreignKey: "categoryId" });
+Product.belongsTo(Category, { as: "category" });
+
+module.exports = {
+  Category,
+  Product,
+  Specialty,
+  User,
+};

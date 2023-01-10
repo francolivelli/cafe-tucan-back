@@ -1,24 +1,38 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+
 const app = express();
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 const morgan = require("morgan");
 app.use(morgan("tiny"));
 
 const models = require("./models");
 
+const routes = require("./routes");
+app.use("/api", routes);
+
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config({ path: "../.env" });
+  require("dotenv").config();
 }
 
 const PORT = process.env.PORT || 3000;
 
-const db = require("./config/db");
+const db = require("./database/db");
 
-db.sync({ force: false })
-  .then(() => {
+const connect = async () => {
+  try {
     app.listen(PORT, () => {
       console.log("Server is listening on port", PORT);
     });
-  })
-  .catch(error => console.log("There was an error:", error));
+    await db.sync({ force: false });
+    console.log("Connection to the database has been established");
+  } catch (error) {
+    console.error("There was an error:", error);
+  }
+};
+
+connect();
