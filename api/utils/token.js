@@ -9,7 +9,7 @@ const generateToken = (payload) => {
 };
 
 const validateToken = (token) => {
-  return jwt.verify(token, process.env.AUTH_SECRET);
+  return jwt.verify(token, auth.secret);
 };
 
 module.exports = { generateToken, validateToken };

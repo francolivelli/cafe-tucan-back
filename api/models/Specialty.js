@@ -13,6 +13,10 @@ Specialty.init(
       type: Sequelize.STRING,
       allowNull: true,
     },
+    flag: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     region: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -35,6 +39,14 @@ Specialty.init(
     },
     processing: {
       type: Sequelize.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
       allowNull: false,
     },
   },
