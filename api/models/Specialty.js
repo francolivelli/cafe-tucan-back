@@ -45,6 +45,10 @@ Specialty.init(
       type: Sequelize.TEXT,
       allowNull: false,
     },
+    color: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     active: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
